@@ -41,8 +41,11 @@ namespace SpeechTherapistAPI.Controllers
             if (p == null)
             {
                 _context.patients.Add(value);
+                return Ok(p);
             }
-            return Conflict(p);
+            
+
+                return Conflict(p);
 
         }
 

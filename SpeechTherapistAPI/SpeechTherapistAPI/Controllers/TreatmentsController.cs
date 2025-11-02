@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpeechTherapistAPI.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,24 +9,45 @@ namespace SpeechTherapistAPI.Controllers
     [ApiController]
     public class TreatmentsController : ControllerBase
     {
+        private IDataContext _context;
+        public TreatmentsController(IDataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<TreatmentsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_context.treatments);
         }
 
         // GET api/<TreatmentsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(int id)
         {
-            return "value";
+            var t = _context.treatments.Find(x => x.TreatmentCode == id);
+            if (t == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(t);
         }
 
         // POST api/<TreatmentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] Treatments value)
         {
+
+            var t = _context.treatments.Find(x => x.TreatmentCode == value.TreatmentCode);
+            if (t == null)
+            {
+                _context.treatments.Add(value);
+                return Ok(t);
+            }
+            else
+
+                return Conflict(t);
         }
 
         // PUT api/<TreatmentsController>/5
