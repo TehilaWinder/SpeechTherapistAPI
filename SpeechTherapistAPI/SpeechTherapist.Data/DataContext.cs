@@ -1,8 +1,9 @@
-﻿using SpeechTherapistAPI.Entities;
+﻿
+using SpeechTherapist.Core.Entities;
 
-namespace SpeechTherapistAPI
+namespace SpeechTherapist.Data
 {
-    public class DataContext : IDataContext
+    public class DataContext 
     {
         public List<Patients> patients { get; set; }
         public List<Appointments> appointments { get; set; }

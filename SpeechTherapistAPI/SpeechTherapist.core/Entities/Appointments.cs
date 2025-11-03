@@ -1,4 +1,4 @@
-﻿namespace SpeechTherapistAPI.Entities
+﻿namespace SpeechTherapist.Core.Entities
 {
     public class Appointments
     {

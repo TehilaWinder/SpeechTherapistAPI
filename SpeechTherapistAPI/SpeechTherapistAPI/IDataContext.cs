@@ -1,4 +1,5 @@
-﻿using SpeechTherapistAPI.Entities;
+﻿
+using SpeechTherapist.Core.Entities;
 
 namespace SpeechTherapistAPI
 {

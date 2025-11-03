@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechTherapistAPI", "SpeechTherapistAPI\SpeechTherapistAPI.csproj", "{750DF38B-A043-44A6-9F2C-83F8E0C0F8E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechTherapistAPI", "SpeechTherapistAPI\SpeechTherapistAPI.csproj", "{750DF38B-A043-44A6-9F2C-83F8E0C0F8E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechTerapistTest", "SpeechTerapistTest\SpeechTerapistTest.csproj", "{BB82390F-CB25-45B1-BD89-DFCA330DFE98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechTerapistTest", "SpeechTerapistTest\SpeechTerapistTest.csproj", "{BB82390F-CB25-45B1-BD89-DFCA330DFE98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechTherapist.Core", "SpeechTherapist.core\SpeechTherapist.Core.csproj", "{D6A24C49-D735-4280-8ADD-A27CD60069F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechTherapist.Data", "SpeechTherapist.Data\SpeechTherapist.Data.csproj", "{CF371BCD-8220-411E-A2A5-04AC5A02B3C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechTherapist.Service", "SpeechTherapist.Service\SpeechTherapist.Service.csproj", "{1F8D2242-B963-4821-9094-5E2A8D678EDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{BB82390F-CB25-45B1-BD89-DFCA330DFE98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB82390F-CB25-45B1-BD89-DFCA330DFE98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB82390F-CB25-45B1-BD89-DFCA330DFE98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A24C49-D735-4280-8ADD-A27CD60069F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A24C49-D735-4280-8ADD-A27CD60069F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A24C49-D735-4280-8ADD-A27CD60069F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A24C49-D735-4280-8ADD-A27CD60069F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF371BCD-8220-411E-A2A5-04AC5A02B3C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF371BCD-8220-411E-A2A5-04AC5A02B3C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF371BCD-8220-411E-A2A5-04AC5A02B3C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF371BCD-8220-411E-A2A5-04AC5A02B3C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F8D2242-B963-4821-9094-5E2A8D678EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F8D2242-B963-4821-9094-5E2A8D678EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F8D2242-B963-4821-9094-5E2A8D678EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F8D2242-B963-4821-9094-5E2A8D678EDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

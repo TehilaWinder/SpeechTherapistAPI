@@ -1,3 +1,7 @@
+using SpeechTherapist.Core.Repository;
+using SpeechTherapist.Core.Service;
+using SpeechTherapist.Data;
+using SpeechTherapist.Service;
 using SpeechTherapistAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +12,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IDataContext, DataContext>();
+//יוצר מופע בודד לכל הרצה
+builder.Services.AddSingleton<DataContext>();
+
+builder.Services.AddScoped<IPatientService,PatientService>();
+builder.Services.AddScoped<IPatientRepository,PatientsRepository>();
+
+builder.Services.AddScoped<ITreatmentsServie, TreatmentService>();
+builder.Services.AddScoped<ITreatmentsRepository, TreatmentRepository>();
+
+builder.Services.AddScoped<IAppointmentService, AppointmentsService>();
+builder.Services.AddScoped<IAppointmentsRepository, IAppointmentsRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

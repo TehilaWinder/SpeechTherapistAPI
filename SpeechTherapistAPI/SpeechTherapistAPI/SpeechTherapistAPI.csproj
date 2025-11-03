@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpeechTherapist.core\SpeechTherapist.Core.csproj" />
+    <ProjectReference Include="..\SpeechTherapist.Data\SpeechTherapist.Data.csproj" />
+    <ProjectReference Include="..\SpeechTherapist.Service\SpeechTherapist.Service.csproj" />
+  </ItemGroup>
+
 </Project>
