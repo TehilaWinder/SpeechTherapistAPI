@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SpeechTherapist.Data
 {
-    public class PatientsRepository: IPatientRepository
+    public class PatientsRepository : IPatientRepository
     {
         private readonly DataContext _context;
-        public PatientsRepository( DataContext context)
+        public PatientsRepository(DataContext context)
         {
             _context = context;
         }
@@ -24,15 +24,10 @@ namespace SpeechTherapist.Data
             var p = _context.patients.Find(x => x.PatientCode == id);
             return p;
         }
-        public bool Add(Patients patient)
+        public void Add(Patients patient)
         {
-            var p = _context.patients.Find(x => x.PatientCode == patient.PatientCode);
-            if (p == null)
-            {
-                _context.patients.Add(patient);
-                return true;
-            }
-            return false;
+
+            _context.patients.Add(patient);
         }
     }
 }

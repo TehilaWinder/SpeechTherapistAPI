@@ -11,6 +11,6 @@ namespace SpeechTherapist.Core.Service
     {
         public List<Patients> GetAll();
         public Patients GetById(int id);
-        public bool Add(Patients patient);
+        public void Add(Patients patient);
     }
 }

@@ -22,7 +22,7 @@ builder.Services.AddScoped<ITreatmentsServie, TreatmentService>();
 builder.Services.AddScoped<ITreatmentsRepository, TreatmentRepository>();
 
 builder.Services.AddScoped<IAppointmentService, AppointmentsService>();
-builder.Services.AddScoped<IAppointmentsRepository, IAppointmentsRepository>();
+builder.Services.AddScoped<IAppointmentsRepository, AppointmentRepository>();
 
 var app = builder.Build();
 

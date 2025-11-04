@@ -38,15 +38,15 @@ namespace SpeechTherapistAPI.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Patients value)
         {
-            var p = _patientService.Add(value);
-            if (p == true)
+            var p = _patientService.GetById(value.PatientCode);
+            if (p == null)
             {
-                
-                return Ok(value);
+                _patientService.Add(value);
+                return Ok(p);
             }
             
 
-                return Conflict(value);
+                return Conflict(p);
 
         }
 

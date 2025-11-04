@@ -24,9 +24,9 @@ namespace SpeechTherapist.Service
         {
             return _patientRepository.GetById(id);
         }
-        public bool Add(Patients patient)
+        public void Add(Patients patient)
         {
-            return _patientRepository.Add(patient);
+            _patientRepository.Add(patient);
         }
     }
 }

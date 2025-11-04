@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SpeechTherapistAPI.Entities;
+using SpeechTherapist.Core.Entities;
+using SpeechTherapist.Core.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,16 +10,16 @@ namespace SpeechTherapistAPI.Controllers
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
-        private IDataContext _context;
-        public AppointmentsController(IDataContext context)
+        private IAppointmentService _appointmentService;
+        public AppointmentsController(IAppointmentService appointmentService)
         {
-            _context = context;
+            _appointmentService = appointmentService;
         }
         // GET: api/<AppointmentsController>
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok(_context.appointments);
+            return Ok(_appointmentService.GetAll());
         }
 
         // GET api/<AppointmentsController>/5
@@ -26,7 +27,7 @@ namespace SpeechTherapistAPI.Controllers
         public ActionResult Get(int id)
         {
 
-            var a = _context.appointments.Find(x => x.AppointmentCode == id);
+            var a = _appointmentService.GetById(id);
             if (a == null)
             {
                 return NotFound();
@@ -40,10 +41,10 @@ namespace SpeechTherapistAPI.Controllers
         public ActionResult Post([FromBody] Appointments value)
         {
 
-            var a = _context.appointments.Find(x => x.AppointmentCode == value.AppointmentCode);
+            var a = _appointmentService.GetById(value.AppointmentCode);
             if (a == null)
             {
-                _context.appointments.Add(value);
+                _appointmentService.Add(value);
                 return Ok(a);
             }
             else
