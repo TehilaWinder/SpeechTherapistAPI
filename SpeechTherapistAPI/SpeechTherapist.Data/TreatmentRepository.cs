@@ -17,16 +17,20 @@ namespace SpeechTherapist.Data
         }
         public List<Treatments> GetAll()
         {
-            return _context.treatments;
+            return _context.treatments.ToList();
         }
         public Treatments GetById(int id)
         {
-            var t = _context.treatments.Find(x => x.TreatmentCode == id);
+            var t = _context.treatments.ToList().Find(x => x.TreatmentCode == id);
             return t;
         }
         public void Add(Treatments treatment)
         {
             _context.treatments.Add(treatment);
+        }
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

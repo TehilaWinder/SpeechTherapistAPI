@@ -12,5 +12,7 @@ namespace SpeechTherapist.Core.Repository
         public List<Treatments> GetAll();
         public Treatments GetById(int id);
         public void Add(Treatments treatments);
+        public void Save();
+
     }
 }

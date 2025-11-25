@@ -27,6 +27,7 @@ namespace SpeechTherapist.Service
         public void Add(Appointments appointments)
         {
             _appointmentsRepository.Add(appointments);
+            _appointmentsRepository.Save();
         }
     }
 }

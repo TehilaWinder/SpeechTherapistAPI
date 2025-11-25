@@ -26,6 +26,7 @@ namespace SpeechTherapist.Service
         public void Add(Treatments treatment)
         {
             _treatmentsRepository.Add(treatment);
+            _treatmentsRepository.Save();
         }
 
     }

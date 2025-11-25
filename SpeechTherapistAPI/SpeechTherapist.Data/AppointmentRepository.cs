@@ -16,16 +16,22 @@ namespace SpeechTherapist.Data
         }
         public List<Appointments> GetAll()
         {
-            return _context.appointments;
+            return _context.appointments.ToList();
         }
         public Appointments GetById(int id)
         {
-            var a = _context.appointments.Find(x => x.AppointmentCode == id);
+            var a = _context.appointments.ToList().Find(x => x.AppointmentCode == id);
             return a;
         }
         public void Add(Appointments appointments)
         {
             _context.appointments.Add(appointments);
         }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
     }
 }

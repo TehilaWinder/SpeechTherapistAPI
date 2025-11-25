@@ -17,17 +17,22 @@ namespace SpeechTherapist.Data
         }
         public List<Patients> GetAll()
         {
-            return _context.patients;
+            return _context.patients.ToList();
         }
         public Patients GetById(int id)
         {
-            var p = _context.patients.Find(x => x.PatientCode == id);
+            var p = _context.patients.ToList().Find(x => x.PatientCode == id);
             return p;
         }
         public void Add(Patients patient)
         {
 
             _context.patients.Add(patient);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

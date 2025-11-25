@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //יוצר מופע בודד לכל הרצה
-builder.Services.AddSingleton<DataContext>();
+builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddScoped<IPatientService,PatientService>();
 builder.Services.AddScoped<IPatientRepository,PatientsRepository>();
