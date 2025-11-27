@@ -29,10 +29,24 @@ namespace SpeechTherapist.Data
 
             _context.patients.Add(patient);
         }
-
+        public void Update(int id,Patients patient)
+        {
+            var p= GetById(id);
+            p.FullName = patient.FullName;
+            p.IdNumber = patient.IdNumber;
+            p.PhoneNumber = patient.PhoneNumber;
+            p.Email= patient.Email;
+            p.Rport = patient.Rport;
+            p.IsActive = patient.IsActive;
+        }
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            _context.patients.Remove(GetById(id));
         }
     }
 }

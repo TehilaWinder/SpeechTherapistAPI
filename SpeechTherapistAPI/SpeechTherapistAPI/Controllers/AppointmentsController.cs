@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Service;
+using SpeechTherapist.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,14 +55,32 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<AppointmentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Appointments value)
         {
+            var p = _appointmentService.GetById(id);
+            if (p == null)
+            {
+
+                return NotFound();
+            }
+
+            _appointmentService.Update(id, value);
+            return Ok();
         }
 
         // DELETE api/<AppointmentsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var p = _appointmentService.GetById(id);
+            if (p == null)
+            {
+
+                return NotFound();
+            }
+
+                _appointmentService.Delete(id);
+            return NoContent();
         }
     }
 }

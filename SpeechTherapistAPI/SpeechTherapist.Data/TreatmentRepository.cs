@@ -28,9 +28,22 @@ namespace SpeechTherapist.Data
         {
             _context.treatments.Add(treatment);
         }
+        
+        public void Update(int id,Treatments treatments)
+        {
+            var t= GetById(id);
+            t.TreatmentName = treatments.TreatmentName;
+            t.DurationMinutes = treatments.DurationMinutes;
+        }
+
+        public void Delete(int id)
+        {
+            _context.treatments.Remove(GetById(id));    
+        }
         public void Save()
         {
             _context.SaveChanges();
         }
+
     }
 }

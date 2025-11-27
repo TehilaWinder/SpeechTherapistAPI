@@ -29,5 +29,16 @@ namespace SpeechTherapist.Service
             _treatmentsRepository.Save();
         }
 
+        public void Update(int id, Treatments treatments)
+        {
+            _treatmentsRepository.Update(id, treatments);
+            _treatmentsRepository.Save();
+        }
+
+        public void Delete(int id)
+        {
+            _treatmentsRepository.Delete(id);
+            _treatmentsRepository.Save();
+        }
     }
 }

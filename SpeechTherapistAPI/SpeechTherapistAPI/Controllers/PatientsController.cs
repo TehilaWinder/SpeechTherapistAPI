@@ -42,7 +42,7 @@ namespace SpeechTherapistAPI.Controllers
             if (p == null)
             {
                 _patientService.Add(value);
-                return Ok(p);
+                return Ok();
             }
             
 
@@ -52,14 +52,32 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<PatientsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Patients value)
         {
+            var p = _patientService.GetById(id);
+            if (p == null)
+            {
+                
+                return NotFound();
+            }
+
+            _patientService.Update(id, value);  
+            return Ok();
         }
 
         // DELETE api/<PatientsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var p = _patientService.GetById(id);
+            if (p == null)
+            {
+
+                return NotFound();
+            }
+
+            _patientService.Delete(id);
+            return NoContent();
         }
     }
 }
