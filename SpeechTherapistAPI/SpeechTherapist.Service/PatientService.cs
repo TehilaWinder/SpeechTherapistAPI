@@ -41,5 +41,10 @@ namespace SpeechTherapist.Service
             _patientRepository.Delete(id);
             _patientRepository.Save();
         }
+
+        public Patients GetByIdNumber(string id)
+        {
+            return _patientRepository.GetByIdNumber(id);
+        }
     }
 }

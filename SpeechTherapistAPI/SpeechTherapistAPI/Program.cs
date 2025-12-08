@@ -1,4 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using SpeechTherapist.Core;
 using SpeechTherapist.Core.Repository;
 using SpeechTherapist.Core.Service;
 using SpeechTherapist.Data;
@@ -20,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //יוצר מופע בודד לכל הרצה
 builder.Services.AddDbContext<DataContext>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<IPatientService,PatientService>();
 builder.Services.AddScoped<IPatientRepository,PatientsRepository>();

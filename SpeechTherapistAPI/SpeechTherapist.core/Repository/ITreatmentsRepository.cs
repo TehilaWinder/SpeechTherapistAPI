@@ -11,6 +11,7 @@ namespace SpeechTherapist.Core.Repository
     {
         public List<Treatments> GetAll();
         public Treatments GetById(int id);
+        public Treatments GetByName(string name);
         public void Add(Treatments treatments);
         public void Update(int id, Treatments treatments);
         public void Delete(int id);

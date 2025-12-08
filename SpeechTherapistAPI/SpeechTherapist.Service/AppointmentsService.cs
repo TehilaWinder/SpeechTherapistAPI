@@ -41,5 +41,10 @@ namespace SpeechTherapist.Service
             _appointmentsRepository.Delete(id);
             _appointmentsRepository.Save();
         }
+
+        public Appointments GetByDateAndHour(DateTime DateAndHour)
+        {
+            return _appointmentsRepository.GetByDateAndHour(DateAndHour);
+        }
     }
 }

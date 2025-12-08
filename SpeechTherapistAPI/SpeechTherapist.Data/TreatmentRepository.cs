@@ -45,5 +45,10 @@ namespace SpeechTherapist.Data
             _context.SaveChanges();
         }
 
+        public Treatments GetByName(string name)
+        {
+            var t = _context.treatments.ToList().Find(x => x.TreatmentName == name);
+            return t;
+        }
     }
 }

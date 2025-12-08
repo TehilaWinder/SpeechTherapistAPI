@@ -11,6 +11,7 @@ namespace SpeechTherapist.Core.Service
     {
         public List<Appointments> GetAll();
         public Appointments GetById(int id);
+        public Appointments GetByDateAndHour(DateTime DateAndHour);
         public void Add(Appointments appointments);
         public void Update(int id, Appointments appointments);
         public void Delete(int id);

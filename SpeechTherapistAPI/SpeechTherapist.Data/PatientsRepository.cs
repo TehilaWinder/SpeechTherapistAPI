@@ -48,5 +48,11 @@ namespace SpeechTherapist.Data
         {
             _context.patients.Remove(GetById(id));
         }
+
+        public Patients GetByIdNumber(string id)
+        {
+            var p = _context.patients.ToList().Find(x => x.IdNumber == id);
+            return p;
+        }
     }
 }

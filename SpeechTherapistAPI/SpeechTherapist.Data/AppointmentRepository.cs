@@ -48,5 +48,10 @@ namespace SpeechTherapist.Data
             _context.SaveChanges();
         }
 
+        public Appointments GetByDateAndHour(DateTime DateAndHour)
+        {
+            var a = _context.appointments.ToList().Find(x => x.DateAndHour == DateAndHour);
+            return a;
+        }
     }
 }
