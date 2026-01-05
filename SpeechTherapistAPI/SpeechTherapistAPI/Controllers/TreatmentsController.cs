@@ -23,17 +23,17 @@ namespace SpeechTherapistAPI.Controllers
         }
         // GET: api/<TreatmentsController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var treatments= _treatmentsServie.GetAll();
-            return Ok(_mapper.Map<TreatmentsDto>(treatments));
+            var treatments= await _treatmentsServie.GetAllAsync();
+            return Ok(_mapper.Map<List<TreatmentsDto>>(treatments));
         }
 
         // GET api/<TreatmentsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(string name)
+        public async Task<ActionResult> Get(string name)
         {
-            var t = _treatmentsServie.GetByName(name);
+            var t = await _treatmentsServie.GetByNameAsync(name);
             if (t == null)
             {
                 return NotFound();
@@ -44,13 +44,13 @@ namespace SpeechTherapistAPI.Controllers
 
         // POST api/<TreatmentsController>
         [HttpPost]
-        public ActionResult Post([FromBody] TreatmentsPostModel value)
+        public async Task<ActionResult> Post([FromBody] TreatmentsPostModel value)
         {
 
-            var t = _treatmentsServie.GetByName(value.TreatmentName);
+            var t = _treatmentsServie.GetByNameAsync(value.TreatmentName);
             if (t == null)
             {
-                _treatmentsServie.Add(_mapper.Map<Treatments>(value));
+                await _treatmentsServie.AddAsync(_mapper.Map<Treatments>(value));
                 return Ok(value);
             }
             else
@@ -60,31 +60,31 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<TreatmentsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] TreatmentsPutModel value)
+        public async Task<ActionResult> Put(int id, [FromBody] TreatmentsPutModel value)
         {
-            var p = _treatmentsServie.GetById(id);
+            var p = _treatmentsServie.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _treatmentsServie.Update(id, _mapper.Map<Treatments>(value));
+            await _treatmentsServie.UpdateAsync(id, _mapper.Map<Treatments>(value));
             return Ok();
         }
 
         // DELETE api/<TreatmentsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var p = _treatmentsServie.GetById(id);
+            var p = await _treatmentsServie.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _treatmentsServie.Delete(id);
+            _treatmentsServie.DeleteAsync(id);
             return NoContent();
         }
     }

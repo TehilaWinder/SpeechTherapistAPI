@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using SpeechTherapist.Core.DTOs;
 using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Service;
@@ -22,17 +23,17 @@ namespace SpeechTherapistAPI.Controllers
         }
         // GET: api/<PatientsController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var patients = _patientService.GetAll();
-            return Ok(_mapper.Map<PatientDto>(patients));
+            var patients = await _patientService.GetAllAsync();
+            return Ok(_mapper.Map<List<PatientDto>>(patients));
         }
 
         // GET api/<PatientsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var p = _patientService.GetById(id);
+            var p = await _patientService.GetByIdAsync(id);
             if (p == null)
             {
                 return NotFound();
@@ -42,12 +43,12 @@ namespace SpeechTherapistAPI.Controllers
 
         // POST api/<PatientsController>
         [HttpPost]
-        public ActionResult Post([FromBody] PatientPostModel value)
+        public async Task<ActionResult> Post([FromBody] PatientPostModel value)
         {
-            var p = _patientService.GetByIdNumber(value.IdNumber);
+            var p = _patientService.GetByIdNumberAsync(value.IdNumber);
             if (p == null)
             {
-                _patientService.Add(_mapper.Map<Patients>(value));
+                await _patientService.AddAsync(_mapper.Map<Patients>(value));
                 return Ok();
             }
             
@@ -58,31 +59,31 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<PatientsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] PatientPutModel value)
+        public async Task<ActionResult> Put(int id, [FromBody] PatientPutModel value)
         {
-            var p = _patientService.GetById(id);
+            var p = _patientService.GetByIdAsync(id);
             if (p == null)
             {
                 
                 return NotFound();
             }
 
-            _patientService.Update(id, _mapper.Map<Patients>(value));  
+            await _patientService.UpdateAsync(id, _mapper.Map<Patients>(value));  
             return Ok();
         }
 
         // DELETE api/<PatientsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            var p = _patientService.GetById(id);
+            var p = _patientService.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _patientService.Delete(id);
+            await _patientService.DeleteAsync(id);
             return NoContent();
         }
     }

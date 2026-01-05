@@ -23,18 +23,19 @@ namespace SpeechTherapistAPI.Controllers
         }
         // GET: api/<AppointmentsController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var appointments = _appointmentService.GetAll();
+            var appointments = await _appointmentService.GetAllAsync();
             return Ok(_mapper.Map<List<AppointmentsDto>>(appointments));
         }
 
+
         // GET api/<AppointmentsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(DateTime dateAndHour)
+        public async Task<ActionResult> Get(DateTime dateAndHour)
         {
 
-            var a = _appointmentService.GetByDateAndHour(dateAndHour);
+            var a = await _appointmentService.GetByDateAndHourAsync(dateAndHour);
             if (a == null)
             {
                 return NotFound();
@@ -42,16 +43,15 @@ namespace SpeechTherapistAPI.Controllers
 
             return Ok(_mapper.Map<AppointmentsDto>(a));
         }
-
         // POST api/<AppointmentsController>
         [HttpPost]
-        public ActionResult Post([FromBody] AppointmentsPostModel value)
+        public async Task<ActionResult> Post([FromBody] AppointmentsPostModel value)
         {
 
-            var a = _appointmentService.GetByDateAndHour(value.DateAndHour);
+            var a = await _appointmentService.GetByDateAndHourAsync(value.DateAndHour);
             if (a == null)
             {
-                _appointmentService.Add(_mapper.Map<Appointments>(value));
+                await _appointmentService.AddAsync(_mapper.Map<Appointments>(value));
                 return Ok(value);
             }
             else
@@ -61,31 +61,31 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<AppointmentsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] AppointmentsPutModel value)
+        public async Task<ActionResult> Put(int id, [FromBody] AppointmentsPutModel value)
         {
-            var p = _appointmentService.GetById(id);
+            var p = _appointmentService.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _appointmentService.Update(id, _mapper.Map<Appointments>(value));
+            await _appointmentService.UpdateAsync(id, _mapper.Map<Appointments>(value));
             return Ok();
         }
 
         // DELETE api/<AppointmentsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var p = _appointmentService.GetById(id);
+             var p = await _appointmentService.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _appointmentService.Delete(id);
+            await _appointmentService.DeleteAsync(id);
             return NoContent();
         }
     }

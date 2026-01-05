@@ -16,34 +16,34 @@ namespace SpeechTherapist.Service
         {
             _treatmentsRepository = treatmentsRepository;
         }
-        public List<Treatments> GetAll()
+        public async Task<IEnumerable<Treatments>> GetAllAsync()
         {
-            return _treatmentsRepository.GetAll();
+            return await _treatmentsRepository.GetAllAsync();
         }
-        public Treatments GetById(int id) {
-            return _treatmentsRepository.GetById(id);
+        public async Task<Treatments> GetByIdAsync(int id) {
+            return await _treatmentsRepository.GetByIdAsync(id);
         }
-        public void Add(Treatments treatment)
+        public async Task AddAsync(Treatments treatment)
         {
             _treatmentsRepository.Add(treatment);
-            _treatmentsRepository.Save();
+            await _treatmentsRepository.SaveAsync();
         }
 
-        public void Update(int id, Treatments treatments)
+        public async Task UpdateAsync(int id, Treatments treatments)
         {
-            _treatmentsRepository.Update(id, treatments);
-            _treatmentsRepository.Save();
+            await _treatmentsRepository.UpdateAsync(id, treatments);
+            await _treatmentsRepository.SaveAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _treatmentsRepository.Delete(id);
-            _treatmentsRepository.Save();
+            await _treatmentsRepository.DeleteAsync(id);
+            await _treatmentsRepository.SaveAsync();
         }
 
-        public Treatments GetByName(string name)
+        public Task<Treatments> GetByNameAsync(string name)
         {
-            return _treatmentsRepository.GetByName(name);
+            return _treatmentsRepository.GetByNameAsync(name);
         }
     }
 }

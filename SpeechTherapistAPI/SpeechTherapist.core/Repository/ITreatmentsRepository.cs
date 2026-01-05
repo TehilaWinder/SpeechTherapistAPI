@@ -9,13 +9,13 @@ namespace SpeechTherapist.Core.Repository
 {
     public interface ITreatmentsRepository
     {
-        public List<Treatments> GetAll();
-        public Treatments GetById(int id);
-        public Treatments GetByName(string name);
+        public Task<IEnumerable<Treatments>> GetAllAsync();
+        public Task<Treatments> GetByIdAsync(int id);
+        public Task<Treatments> GetByNameAsync(string name);
         public void Add(Treatments treatments);
-        public void Update(int id, Treatments treatments);
-        public void Delete(int id);
-        public void Save();
+        public Task UpdateAsync(int id, Treatments treatments);
+        public Task DeleteAsync(int id);
+        public Task SaveAsync();
 
     }
 }

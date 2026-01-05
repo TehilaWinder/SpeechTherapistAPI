@@ -16,35 +16,35 @@ namespace SpeechTherapist.Service
         {
             _appointmentsRepository = appointmentsRepository;
         }
-        public List<Appointments> GetAll()
+        public async Task<IEnumerable<Appointments>> GetAllAsync()
         {
-            return _appointmentsRepository.GetAll();
+            return await _appointmentsRepository.GetAllAsync();
         }
-        public Appointments GetById(int id)
+        public async Task<Appointments> GetByIdAsync(int id)
         {
-            return _appointmentsRepository.GetById(id);
+            return await _appointmentsRepository.GetByIdAsync(id);
         }
-        public void Add(Appointments appointments)
+        public async Task AddAsync(Appointments appointments)
         {
             _appointmentsRepository.Add(appointments);
-            _appointmentsRepository.Save();
+            await _appointmentsRepository.SaveAsync();
         }
 
-        public void Update(int id, Appointments appointments)
+        public async Task UpdateAsync(int id, Appointments appointments)
         {
-            _appointmentsRepository.Update(id, appointments);
-            _appointmentsRepository.Save();
+           await _appointmentsRepository.UpdateAsync(id, appointments);
+           await _appointmentsRepository.SaveAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _appointmentsRepository.Delete(id);
-            _appointmentsRepository.Save();
+           await _appointmentsRepository.DeleteAsync(id);
+           await _appointmentsRepository.SaveAsync();
         }
 
-        public Appointments GetByDateAndHour(DateTime DateAndHour)
+        public async Task<Appointments> GetByDateAndHourAsync(DateTime DateAndHour)
         {
-            return _appointmentsRepository.GetByDateAndHour(DateAndHour);
+            return await _appointmentsRepository.GetByDateAndHourAsync(DateAndHour);
         }
     }
 }

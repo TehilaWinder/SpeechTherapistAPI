@@ -16,35 +16,35 @@ namespace SpeechTherapist.Service
         {
             _patientRepository = patientRepository;
         }
-        public List<Patients> GetAll() 
+        public async Task<IEnumerable<Patients>> GetAllAsync() 
         { 
-            return _patientRepository.GetAll(); 
+            return await _patientRepository.GetAllAsync(); 
         }
-        public Patients GetById(int id)
+        public async Task<Patients> GetByIdAsync(int id)
         {
-            return _patientRepository.GetById(id);
+            return await _patientRepository.GetByIdAsync(id);
         }
-        public void Add(Patients patient)
+        public async Task AddAsync(Patients patient)
         {
             _patientRepository.Add(patient);
-            _patientRepository.Save();
+           await _patientRepository.SaveAsync();
         }
 
-        public void Update(int id, Patients patient)
+        public async Task UpdateAsync(int id, Patients patient)
         {
-            _patientRepository.Update(id, patient);
-            _patientRepository.Save();
+            await _patientRepository.UpdateAsync(id, patient);
+            await _patientRepository.SaveAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _patientRepository.Delete(id);
-            _patientRepository.Save();
+           await _patientRepository.DeleteAsync(id);
+           await _patientRepository.SaveAsync();
         }
 
-        public Patients GetByIdNumber(string id)
+        public async Task<Patients> GetByIdNumberAsync(string id)
         {
-            return _patientRepository.GetByIdNumber(id);
+            return await _patientRepository.GetByIdNumberAsync(id);
         }
     }
 }

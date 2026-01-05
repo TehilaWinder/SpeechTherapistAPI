@@ -15,13 +15,13 @@ namespace SpeechTherapist.Data
         public AppointmentRepository(DataContext context) { 
             _context = context;
         }
-        public List<Appointments> GetAll()
+        public async Task<IEnumerable<Appointments>> GetAllAsync()
         {
-            return _context.appointments.Include(a=>a.Patients).Include(a => a.Treatments).ToList();
+            return await _context.appointments.Include(a=>a.Patients).Include(a => a.Treatments).ToListAsync();
         }
-        public Appointments GetById(int id)
+        public async Task<Appointments> GetByIdAsync(int id)
         {
-            var a = _context.appointments.ToList().Find(x => x.AppointmentCode == id);
+            var a = await _context.appointments.FirstOrDefaultAsync(x => x.AppointmentCode == id);
             return a;
         }
         public void Add(Appointments appointments)
@@ -29,28 +29,29 @@ namespace SpeechTherapist.Data
             _context.appointments.Add(appointments);
         }
 
-        public void Update(int id,Appointments appointments)
+        public async Task UpdateAsync(int id,Appointments appointments)
         {
-            var a = GetById(id);
+            var a =await GetByIdAsync(id);
             a.DateAndHour=appointments.DateAndHour;
             a.Status=appointments.Status;
             a.Patients=appointments.Patients;
             a.Treatments=appointments.Treatments;
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _context.appointments.Remove(GetById(id));
+            var appointment = await GetByIdAsync(id);
+             _context.appointments.Remove(appointment);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public Appointments GetByDateAndHour(DateTime DateAndHour)
+        public async Task<Appointments> GetByDateAndHourAsync(DateTime DateAndHour)
         {
-            var a = _context.appointments.ToList().Find(x => x.DateAndHour == DateAndHour);
+            var a = await _context.appointments.FirstOrDefaultAsync(x => x.DateAndHour == DateAndHour);
             return a;
         }
     }

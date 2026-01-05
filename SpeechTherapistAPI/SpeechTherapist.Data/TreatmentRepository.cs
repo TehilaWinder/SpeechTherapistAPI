@@ -1,4 +1,5 @@
-﻿using SpeechTherapist.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace SpeechTherapist.Data
         {
             _context = context;
         }
-        public List<Treatments> GetAll()
+        public async Task<IEnumerable<Treatments>> GetAllAsync()
         {
-            return _context.treatments.ToList();
+            return await _context.treatments.ToListAsync();
         }
-        public Treatments GetById(int id)
+        public async Task<Treatments> GetByIdAsync(int id)
         {
-            var t = _context.treatments.ToList().Find(x => x.TreatmentCode == id);
+            var t = await _context.treatments.FirstOrDefaultAsync(x => x.TreatmentCode == id);
             return t;
         }
         public void Add(Treatments treatment)
@@ -29,25 +30,26 @@ namespace SpeechTherapist.Data
             _context.treatments.Add(treatment);
         }
         
-        public void Update(int id,Treatments treatments)
+        public async Task UpdateAsync(int id,Treatments treatments)
         {
-            var t= GetById(id);
+            var t= await GetByIdAsync(id);
             t.TreatmentName = treatments.TreatmentName;
             t.DurationMinutes = treatments.DurationMinutes;
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _context.treatments.Remove(GetById(id));    
+            var treatment = await GetByIdAsync(id);
+            _context.treatments.Remove(treatment);    
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public Treatments GetByName(string name)
+        public async Task<Treatments> GetByNameAsync(string name)
         {
-            var t = _context.treatments.ToList().Find(x => x.TreatmentName == name);
+            var t = await _context.treatments.FirstOrDefaultAsync(x => x.TreatmentName == name);
             return t;
         }
     }

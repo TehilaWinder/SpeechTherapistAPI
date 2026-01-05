@@ -1,4 +1,5 @@
-﻿using SpeechTherapist.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace SpeechTherapist.Data
         {
             _context = context;
         }
-        public List<Patients> GetAll()
+        public async Task<IEnumerable<Patients>> GetAllAsync()
         {
-            return _context.patients.ToList();
+            return await _context.patients.ToListAsync();
         }
-        public Patients GetById(int id)
+        public async Task<Patients> GetByIdAsync(int id)
         {
-            var p = _context.patients.ToList().Find(x => x.PatientCode == id);
+             var p = await _context.patients.FirstOrDefaultAsync(x => x.PatientCode == id);
             return p;
         }
         public void Add(Patients patient)
@@ -29,9 +30,9 @@ namespace SpeechTherapist.Data
 
             _context.patients.Add(patient);
         }
-        public void Update(int id,Patients patient)
+        public async Task UpdateAsync(int id,Patients patient)
         {
-            var p= GetById(id);
+            var p=await GetByIdAsync(id);
             p.FullName = patient.FullName;
             p.IdNumber = patient.IdNumber;
             p.PhoneNumber = patient.PhoneNumber;
@@ -39,19 +40,20 @@ namespace SpeechTherapist.Data
             p.Rport = patient.Rport;
             p.IsActive = patient.IsActive;
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _context.patients.Remove(GetById(id));
+            var patients = await GetByIdAsync(id);
+            _context.patients.Remove(patients);
         }
 
-        public Patients GetByIdNumber(string id)
+        public async Task<Patients> GetByIdNumberAsync(string id)
         {
-            var p = _context.patients.ToList().Find(x => x.IdNumber == id);
+            var p = await _context.patients.FirstOrDefaultAsync(x => x.IdNumber == id);
             return p;
         }
     }

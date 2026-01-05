@@ -9,12 +9,12 @@ namespace SpeechTherapist.Core.Service
 {
     public interface IAppointmentService
     {
-        public List<Appointments> GetAll();
-        public Appointments GetById(int id);
-        public Appointments GetByDateAndHour(DateTime DateAndHour);
-        public void Add(Appointments appointments);
-        public void Update(int id, Appointments appointments);
-        public void Delete(int id);
+        public Task<IEnumerable<Appointments>> GetAllAsync();
+        public Task<Appointments> GetByIdAsync(int id);     
+        public Task<Appointments> GetByDateAndHourAsync(DateTime DateAndHour);
+        public Task AddAsync(Appointments appointments);
+        public Task UpdateAsync(int id, Appointments appointments);
+        public  Task DeleteAsync(int id);
 
     }
 }
