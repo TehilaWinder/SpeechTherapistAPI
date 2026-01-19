@@ -6,13 +6,12 @@ namespace SpeechTherapist.Core.Entities
     {
         [Key]
         public int PatientCode { get; set; }
-        public string FullName { get; set; }
-        public string IdNumber { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Rport { get; set; }
+        public int UserCode { get; set; }
+        public Users User { get; set; }
+        public string Report { get; set; }
         public bool IsActive { get; set; }
         public List<Appointments> Appointments { get; set; }
+        public SpeechTerapist SpeechTerapist { get; set; }
 
     }
 }

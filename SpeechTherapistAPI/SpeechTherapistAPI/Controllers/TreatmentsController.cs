@@ -77,14 +77,14 @@ namespace SpeechTherapistAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var p = await _treatmentsServie.GetByIdAsync(id);
+            var p =  _treatmentsServie.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            _treatmentsServie.DeleteAsync(id);
+           await _treatmentsServie.DeleteAsync(id);
             return NoContent();
         }
     }
