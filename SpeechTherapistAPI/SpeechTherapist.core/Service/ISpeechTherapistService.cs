@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeechTherapist.Core.Repository
+namespace SpeechTherapist.Core.Service
 {
-    public interface ISpeechTherapistRpository
+    public interface ISpeechTherapistService
     {
         public Task<IEnumerable<SpeechTerapist>> GetAllAsync();
         public Task<SpeechTerapist> GetByIdAsync(int id);
         public Task<SpeechTerapist> GetByIdNumberAsync(string id);
-        public void Add(SpeechTerapist speechTherapist);
+        public Task AddAsync(SpeechTerapist speechTherapist);
         public Task UpdateAsync(int id, SpeechTerapist speechTherapist);
         public Task DeleteAsync(int id);
-        public Task SaveAsync();
+        
     }
 }

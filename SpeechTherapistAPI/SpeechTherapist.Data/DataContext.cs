@@ -11,6 +11,8 @@ namespace SpeechTherapist.Data
         public DbSet<Patients> patients { get; set; }
         public DbSet<Appointments> appointments { get; set; }
         public DbSet<Treatments> treatments { get; set; }
+
+        public DbSet<Report> reports { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=SpeechTherapist_db");

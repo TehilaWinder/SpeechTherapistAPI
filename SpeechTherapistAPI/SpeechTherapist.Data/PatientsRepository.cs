@@ -33,11 +33,9 @@ namespace SpeechTherapist.Data
         public async Task UpdateAsync(int id,Patients patient)
         {
             var p=await GetByIdAsync(id);
-            p.User.Email=patient.User.Email;
-            p.User.IdNumber=patient.User.IdNumber;
-            p.User.PhoneNumber=patient.User.PhoneNumber;   
-            p.User.FullName=patient.User.FullName;  
-            p.Report = patient.Report;
+            p.Email=patient.Email;
+            p.IdNumber=patient.IdNumber;
+            p.PhoneNumber=patient.PhoneNumber;   
             p.IsActive = patient.IsActive;
         }
         public async Task SaveAsync()
@@ -53,7 +51,7 @@ namespace SpeechTherapist.Data
 
         public async Task<Patients> GetByIdNumberAsync(string id)
         {
-            var p = await _context.patients.FirstOrDefaultAsync(x => x.User.IdNumber == id);
+            var p = await _context.patients.FirstOrDefaultAsync(x => x.IdNumber == id);
             return p;
         }
     }

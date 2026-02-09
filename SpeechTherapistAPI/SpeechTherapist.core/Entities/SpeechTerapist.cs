@@ -14,6 +14,9 @@ namespace SpeechTherapist.Core.Entities
         public int UserCode { get; set; }
         public Users User { get; set; }
         public List<Patients> Patients { get; set; }
+        public string IdNumber { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
 
         public eEducation Education { get; set; }
     }
