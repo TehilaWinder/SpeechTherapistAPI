@@ -12,6 +12,7 @@ namespace SpeechTherapistAPI
             CreateMap<Patients, PatientPostModel>().ReverseMap();
             CreateMap<Treatments, TreatmentsPostModel>().ReverseMap();
             CreateMap<Appointments, AppointmentsPostModel>().ReverseMap();
+            CreateMap<SpeechTerapist, SpeechTherapistPostModel>().ReverseMap();
         }
     }
 }

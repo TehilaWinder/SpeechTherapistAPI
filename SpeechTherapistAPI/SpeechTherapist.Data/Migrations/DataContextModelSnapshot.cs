@@ -33,20 +33,20 @@ namespace SpeechTherapist.Data.Migrations
                     b.Property<DateTime>("DateAndHour")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PatientsPatientCode")
+                    b.Property<int>("PatientCode")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TreatmentsTreatmentCode")
+                    b.Property<int>("TreatmentCode")
                         .HasColumnType("int");
 
                     b.HasKey("AppointmentCode");
 
-                    b.HasIndex("PatientsPatientCode");
+                    b.HasIndex("PatientCode");
 
-                    b.HasIndex("TreatmentsTreatmentCode");
+                    b.HasIndex("TreatmentCode");
 
                     b.ToTable("appointments");
                 });
@@ -59,29 +59,72 @@ namespace SpeechTherapist.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientCode"));
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Report")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SpeechTerapistSpeechTherapistCode")
+                    b.Property<string>("IdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SpeechTerapistSpeechTherapistCode")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpeechTherapistCode")
                         .HasColumnType("int");
 
                     b.Property<int>("UserCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserCode1")
                         .HasColumnType("int");
 
                     b.HasKey("PatientCode");
 
                     b.HasIndex("SpeechTerapistSpeechTherapistCode");
 
-                    b.HasIndex("UserCode1");
+                    b.HasIndex("SpeechTherapistCode");
+
+                    b.HasIndex("UserCode");
 
                     b.ToTable("patients");
+                });
+
+            modelBuilder.Entity("SpeechTherapist.Core.Entities.Report", b =>
+                {
+                    b.Property<int>("ReportCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportCode"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GoogleDocUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApprovedByTherapist")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PatientCode")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpeechTherapistCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReportCode");
+
+                    b.HasIndex("PatientCode");
+
+                    b.HasIndex("SpeechTherapistCode");
+
+                    b.ToTable("reports");
                 });
 
             modelBuilder.Entity("SpeechTherapist.Core.Entities.SpeechTerapist", b =>
@@ -92,18 +135,28 @@ namespace SpeechTherapist.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpeechTherapistCode"));
 
-                    b.Property<int>("Education")
-                        .HasColumnType("int");
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserCode")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserCode1")
-                        .HasColumnType("int");
-
                     b.HasKey("SpeechTherapistCode");
 
-                    b.HasIndex("UserCode1");
+                    b.HasIndex("UserCode");
 
                     b.ToTable("speechTerapists");
                 });
@@ -136,24 +189,17 @@ namespace SpeechTherapist.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserCode"));
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdNumber")
+                    b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("UserCode");
 
@@ -164,13 +210,13 @@ namespace SpeechTherapist.Data.Migrations
                 {
                     b.HasOne("SpeechTherapist.Core.Entities.Patients", "Patients")
                         .WithMany("Appointments")
-                        .HasForeignKey("PatientsPatientCode")
+                        .HasForeignKey("PatientCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SpeechTherapist.Core.Entities.Treatments", "Treatments")
                         .WithMany("Appointments")
-                        .HasForeignKey("TreatmentsTreatmentCode")
+                        .HasForeignKey("TreatmentCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -181,29 +227,52 @@ namespace SpeechTherapist.Data.Migrations
 
             modelBuilder.Entity("SpeechTherapist.Core.Entities.Patients", b =>
                 {
-                    b.HasOne("SpeechTherapist.Core.Entities.SpeechTerapist", "SpeechTerapist")
+                    b.HasOne("SpeechTherapist.Core.Entities.SpeechTerapist", null)
                         .WithMany("Patients")
-                        .HasForeignKey("SpeechTerapistSpeechTherapistCode")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("SpeechTerapistSpeechTherapistCode");
+
+                    b.HasOne("SpeechTherapist.Core.Entities.SpeechTerapist", "speechTherapist")
+                        .WithMany()
+                        .HasForeignKey("SpeechTherapistCode")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("SpeechTherapist.Core.Entities.Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserCode1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("UserCode")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("SpeechTerapist");
-
                     b.Navigation("User");
+
+                    b.Navigation("speechTherapist");
+                });
+
+            modelBuilder.Entity("SpeechTherapist.Core.Entities.Report", b =>
+                {
+                    b.HasOne("SpeechTherapist.Core.Entities.Patients", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientCode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SpeechTherapist.Core.Entities.SpeechTerapist", "SpeechTherapist")
+                        .WithMany()
+                        .HasForeignKey("SpeechTherapistCode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("SpeechTherapist");
                 });
 
             modelBuilder.Entity("SpeechTherapist.Core.Entities.SpeechTerapist", b =>
                 {
                     b.HasOne("SpeechTherapist.Core.Entities.Users", "User")
                         .WithMany()
-                        .HasForeignKey("UserCode1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("UserCode")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

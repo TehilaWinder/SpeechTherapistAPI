@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using SpeechTherapist.Core.Service;
 using SpeechTherapistAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SpeechTherapistAPI.Controllers
 {
@@ -13,19 +15,23 @@ namespace SpeechTherapistAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration)
+        private readonly IUsersService _userService;
+
+        public AuthController(IConfiguration configuration, IUsersService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
         [HttpPost]
-        public IActionResult Login([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            if (loginModel.userName != null)
+            var user = await _userService.GetByUserNameAsync(loginModel.UserName, loginModel.Password);
+            if (loginModel.UserName != null)
             {
                 var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Type.ToString())
             };
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

@@ -5,14 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeechTherapist.Core.Repository
+namespace SpeechTherapist.Core.Service
 {
-    public interface IUsersRepository
+    public interface IUsersService
     {
         public Task<Users> GetByUserNameAsync(string UserName, string Password);
         public Task<Users> AddUserAsync(Users user);
-
     }
-
 }
-

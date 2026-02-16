@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpeechTherapist.Core.DTOs;
 using SpeechTherapist.Core.Entities;
@@ -23,6 +24,7 @@ namespace SpeechTherapistAPI.Controllers
         }
         // GET: api/<TreatmentsController>
         [HttpGet]
+        [Authorize(Roles = "SpeechTherapist Patient")]
         public async Task<ActionResult> Get()
         {
             var treatments= await _treatmentsServie.GetAllAsync();
@@ -31,6 +33,7 @@ namespace SpeechTherapistAPI.Controllers
 
         // GET api/<TreatmentsController>/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "SpeechTherapist Patient")]
         public async Task<ActionResult> Get(string name)
         {
             var t = await _treatmentsServie.GetByNameAsync(name);
@@ -44,6 +47,7 @@ namespace SpeechTherapistAPI.Controllers
 
         // POST api/<TreatmentsController>
         [HttpPost]
+        [Authorize(Roles = "SpeechTherapist")]
         public async Task<ActionResult> Post([FromBody] TreatmentsPostModel value)
         {
 
@@ -60,6 +64,7 @@ namespace SpeechTherapistAPI.Controllers
 
         // PUT api/<TreatmentsController>/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "SpeechTherapist")]
         public async Task<ActionResult> Put(int id, [FromBody] TreatmentsPutModel value)
         {
             var p = _treatmentsServie.GetByIdAsync(id);
@@ -75,6 +80,7 @@ namespace SpeechTherapistAPI.Controllers
 
         // DELETE api/<TreatmentsController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SpeechTherapist")]
         public async Task<ActionResult> Delete(int id)
         {
             var p =  _treatmentsServie.GetByIdAsync(id);

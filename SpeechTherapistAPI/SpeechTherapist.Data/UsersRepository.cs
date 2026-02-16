@@ -11,46 +11,21 @@ namespace SpeechTherapist.Data
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly DataContext _context;
-        public UsersRepository(DataContext context)
+        private readonly DataContext _dataContext;
+        public UsersRepository(DataContext dataContext)
         {
-            _context = context;
+            _dataContext = dataContext;
         }
-        public void AddUserAsync(Users user)
+        public async Task<Users> GetByUserNameAsync(string userName, string Password)
         {
-            _context.users.Add(user);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var users = await GetByIdAsync(id);
-            _context.users.Remove(users);
+            return await _dataContext.users.FirstOrDefaultAsync(u => u.UserName == userName && u.password == Password);
         }
 
-        public async Task<Users> GetByIdAsync(int id)
+        public async Task<Users> AddUserAsync(Users user)
         {
-            var u = await _context.users.FirstOrDefaultAsync(x => x.UserCode == id);
-            return u;
+            await _dataContext.users.AddAsync(user);
+            return user;
         }
 
-        public async Task<Users> GetByUserNameAsync(string UserName, string Password)
-        {
-            var u = await _context.users.FirstOrDefaultAsync(x => x.IdNumber == Password && x.FullName==UserName);
-            return u;
-        }
-
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(int id, Users users)
-        {
-            var u = await GetByIdAsync(id);
-            u.Email = users.Email;
-            u.FullName = users.FullName;
-            u.PhoneNumber = users.PhoneNumber;
-            u.IdNumber = users.IdNumber;
-        }
     }
 }

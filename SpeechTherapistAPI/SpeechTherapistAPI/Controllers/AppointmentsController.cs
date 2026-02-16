@@ -13,7 +13,7 @@ namespace SpeechTherapistAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "SpeechTherapist Patient")]
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;

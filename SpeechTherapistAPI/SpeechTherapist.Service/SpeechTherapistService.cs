@@ -1,5 +1,6 @@
 ﻿using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Repository;
+using SpeechTherapist.Core.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,43 +9,43 @@ using System.Threading.Tasks;
 
 namespace SpeechTherapist.Service
 {
-    public class SpeechTherapistService
+    public class SpeechTherapistService:ISpeechTherapistService
     {
-        private readonly IPatientRepository _patientRepository;
-        public PatientService(IPatientRepository patientRepository)
+        private readonly ISpeechTherapistRpository _speechTherapistRpository;
+        public SpeechTherapistService(ISpeechTherapistRpository speechTherapistRpository)
         {
-            _patientRepository = patientRepository;
+            _speechTherapistRpository = speechTherapistRpository;
         }
-        public async Task<IEnumerable<Patients>> GetAllAsync()
+        public async Task<IEnumerable<SpeechTerapist>> GetAllAsync()
         {
-            return await _patientRepository.GetAllAsync();
+            return await _speechTherapistRpository.GetAllAsync();
         }
-        public async Task<Patients> GetByIdAsync(int id)
+        public async Task<SpeechTerapist> GetByIdAsync(int id)
         {
-            return await _patientRepository.GetByIdAsync(id);
+            return await _speechTherapistRpository.GetByIdAsync(id);
         }
-        public async Task AddAsync(Patients patient)
+        public async Task AddAsync(SpeechTerapist speechTherapist)
         {
-            _patientRepository.Add(patient);
-            await _patientRepository.SaveAsync();
+            _speechTherapistRpository.Add(speechTherapist);
+            await _speechTherapistRpository.SaveAsync();
         }
 
-        public async Task UpdateAsync(int id, Patients patient)
+        public async Task UpdateAsync(int id, SpeechTerapist speechTherapist)
         {
-            await _patientRepository.UpdateAsync(id, patient);
-            await _patientRepository.SaveAsync();
+            await _speechTherapistRpository.UpdateAsync(id, speechTherapist);
+            await _speechTherapistRpository.SaveAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _patientRepository.DeleteAsync(id);
-            await _patientRepository.SaveAsync();
+            await _speechTherapistRpository.DeleteAsync(id);
+            await _speechTherapistRpository.SaveAsync();
         }
 
-        public async Task<Patients> GetByIdNumberAsync(string id)
+        public async Task<SpeechTerapist> GetByIdNumberAsync(string id)
         {
-            return await _patientRepository.GetByIdNumberAsync(id);
+            return await _speechTherapistRpository.GetByIdNumberAsync(id);
         }
     }
 }
-}
+

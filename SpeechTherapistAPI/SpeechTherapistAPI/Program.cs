@@ -80,6 +80,9 @@ builder.Services.AddScoped<ITreatmentsRepository, TreatmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentsService>();
 builder.Services.AddScoped<IAppointmentsRepository, AppointmentRepository>();
 
+builder.Services.AddScoped<ISpeechTherapistService, SpeechTherapistService>();
+builder.Services.AddScoped<ISpeechTherapistRpository, SpeechTherapistRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

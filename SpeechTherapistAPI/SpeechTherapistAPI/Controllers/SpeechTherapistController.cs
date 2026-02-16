@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using SpeechTherapist.Core.DTOs;
 using SpeechTherapist.Core.Entities;
 using SpeechTherapist.Core.Service;
-using SpeechTherapist.Service;
 using SpeechTherapistAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,30 +13,32 @@ namespace SpeechTherapistAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "SpeechTherapist")]
-    public class PatientsController : ControllerBase
+    public class SpeechTherapistController : ControllerBase
     {
-        private readonly IPatientService _patientService;
+        private readonly ISpeechTherapistService _speechTherapistService;
         private readonly IMapper _mapper;
         private readonly IUsersService _userService;
-        public PatientsController(IPatientService patientService, IUsersService usersService, IMapper mapper)
+        public SpeechTherapistController(ISpeechTherapistService speechTherapistService, IUsersService usersService, IMapper mapper)
         {
-            _patientService = patientService;
+            _speechTherapistService = speechTherapistService;
             _mapper = mapper;
             _userService = usersService;
         }
         // GET: api/<PatientsController>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> Get()
         {
-            var patients = await _patientService.GetAllAsync();
-            return Ok(_mapper.Map<List<PatientDto>>(patients));
+            var speechTerapists = await _speechTherapistService.GetAllAsync();
+            return Ok(_mapper.Map<List<SpeechTherapistDto>>(speechTerapists));
         }
 
         // GET api/<PatientsController>/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult> Get(int id)
         {
-            var p = await _patientService.GetByIdAsync(id);
+            var p = await _speechTherapistService.GetByIdAsync(id);
             if (p == null)
             {
                 return NotFound();
@@ -48,39 +48,38 @@ namespace SpeechTherapistAPI.Controllers
 
         // POST api/<PatientsController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] PatientPostModel value)
+        public async Task<ActionResult> Post([FromBody] SpeechTherapistPostModel value)
         {
-            var user = new Users { UserName = value.UserName, password = value.Password, Type = eType.Patient };
+            var user = new Users { UserName = value.UserName, password = value.Password, Type = eType.SpeechTherapist };
             var User = await _userService.AddUserAsync(user);
-            var newPatient = _mapper.Map<Patients>(value);
-            newPatient.User = User;
-            newPatient.UserCode = User.UserCode;
-            var p = await _patientService.GetByIdAsync(newPatient.PatientCode);
+            var newSpeechTherapist = _mapper.Map<SpeechTerapist>(value);
+            newSpeechTherapist.User = User;
+            newSpeechTherapist.UserCode = User.UserCode;
+            var p = await _speechTherapistService.GetByIdAsync(newSpeechTherapist.SpeechTherapistCode);
 
             if (p == null)
             {
-                await _patientService.AddAsync(newPatient);
+                await _speechTherapistService.AddAsync(newSpeechTherapist);
                 return Ok();
             }
-            
 
-                return Conflict(p);
+
+            return Conflict(p);
 
         }
 
         // PUT api/<PatientsController>/5
         [HttpPut("{id}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> Put(int id, [FromBody] PatientPutModel value)
+        public async Task<ActionResult> Put(int id, [FromBody] SpeechTherapistPutModel value)
         {
-            var p = _patientService.GetByIdAsync(id);
+            var p = _speechTherapistService.GetByIdAsync(id);
             if (p == null)
             {
-                
+
                 return NotFound();
             }
 
-            await _patientService.UpdateAsync(id, _mapper.Map<Patients>(value));  
+            await _speechTherapistService.UpdateAsync(id, _mapper.Map<SpeechTerapist>(value));
             return Ok();
         }
 
@@ -88,14 +87,14 @@ namespace SpeechTherapistAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var p = _patientService.GetByIdAsync(id);
+            var p = _speechTherapistService.GetByIdAsync(id);
             if (p == null)
             {
 
                 return NotFound();
             }
 
-            await _patientService.DeleteAsync(id);
+            await _speechTherapistService.DeleteAsync(id);
             return NoContent();
         }
     }
