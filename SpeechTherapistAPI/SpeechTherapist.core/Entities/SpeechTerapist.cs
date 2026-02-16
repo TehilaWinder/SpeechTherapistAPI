@@ -17,6 +17,7 @@ namespace SpeechTherapist.Core.Entities
         [ForeignKey("UserCode")]
         public Users User { get; set; }
         public List<Patients> Patients { get; set; }
+        public List<WorkingHours> WorkingHours { get; set; }
         public string IdNumber { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }

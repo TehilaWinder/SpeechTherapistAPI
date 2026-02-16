@@ -21,7 +21,7 @@ namespace SpeechTherapist.Core.Entities
     }
     public enum eStatus
     {
-        active, delyed, canceled
+        Confirmed, Pending, Cancelled , Rescheduled
     }
 
 }

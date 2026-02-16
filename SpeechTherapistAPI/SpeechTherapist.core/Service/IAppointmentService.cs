@@ -15,6 +15,9 @@ namespace SpeechTherapist.Core.Service
         public Task AddAsync(Appointments appointments);
         public Task UpdateAsync(int id, Appointments appointments);
         public  Task DeleteAsync(int id);
+        public Task<bool> PreventingDuplicateQueues(Appointments appointments);
+        public bool QueueStatusCheck(Appointments appointments);
+        public bool QueueWithinNormalRange(Appointments appointments);
 
     }
 }
