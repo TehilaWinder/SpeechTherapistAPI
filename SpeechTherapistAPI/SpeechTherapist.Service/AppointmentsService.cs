@@ -86,21 +86,24 @@ namespace SpeechTherapist.Service
         }
         public async Task<bool> RescheduleAppointment(int appointmentId, DateTime newDate)
         {
-            var appointment = await _context.Appointments.FindAsync(appointmentId);
+            // 1. שליפת התור מהמאגר
+            var appointment = await _appointmentsRepository.GetByIdAsync(appointmentId);
             if (appointment == null) return false;
 
             // 2. עדכון הנתונים על האובייקט
             appointment.DateAndHour = newDate;
             appointment.Status = eStatus.Rescheduled;
 
-            // 3. בדיקת תקינות (הפונקציה שלך מהשלב הקודם)
+            // 3. בדיקת תקינות
             if (!QueueWithinNormalRange(appointment))
             {
                 return false;
             }
 
-            // 4. שליחה לפונקציית העדכון הכללית שלך!
-            return await Update(appointment);
+            // 4. שמירה ועדכון (חשוב להשתמש ב-await)
+            await _appointmentsRepository.UpdateAsync(appointmentId,appointment);
+
+            return true;
         }
     }
   
